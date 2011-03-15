@@ -7,7 +7,7 @@ Summary:	Libraries for the mp3splt project
 Summary(pl.UTF-8):	Biblioteki do projektu mp3splt
 Name:		libmp3splt
 Version:	0.6.1a
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/mp3splt/%{name}-%{version}.tar.gz
@@ -93,6 +93,9 @@ Dokumentacja API biblioteki libmp3splt.
 %prep
 %setup -q
 %patch0 -p1
+sed -i -e 's/fr_FR/fr/;s/de_DE/de/;' po/LINGUAS
+mv po/de_DE.po po/de.po
+mv po/fr_FR.po po/fr.po
 
 %build
 %{__gettextize}
@@ -132,6 +135,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_libdir}/libmp3splt.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmp3splt.so.0
+%dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/libsplt_mp3.so
 %attr(755,root,root) %{_libdir}/%{name}/libsplt_ogg.so
 
