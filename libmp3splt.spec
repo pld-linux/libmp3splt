@@ -5,7 +5,6 @@
 #
 Summary:	Libraries for the mp3splt project
 Summary(pl.UTF-8):	Biblioteki do projektu mp3splt
-######		/home/users/duddits/rpm/rpm.groups: no such file
 Name:		libmp3splt
 Version:	0.6.1a
 Release:	0.1
