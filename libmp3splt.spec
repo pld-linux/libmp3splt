@@ -1,7 +1,7 @@
 #
 # Conditional build:
+%bcond_without	apidocs		# do not build and package API docs
 %bcond_without	static_libs	# don't build static libraries
-%bcond_without	ltdl		# don't build ltdl
 #
 Summary:	Libraries for the mp3splt project
 Summary(pl.UTF-8):	Biblioteki do projektu mp3splt
@@ -12,6 +12,7 @@ License:	GPL v2
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/mp3splt/%{name}-%{version}.tar.gz
 # Source0-md5:	a6a00d83e49adf27abb7a0cb0ea384a4
+Patch0:		ltdl.patch
 URL:		http://mp3splt.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -19,7 +20,12 @@ BuildRequires:	gettext-devel
 BuildRequires:	libid3tag-devel
 BuildRequires:	libmad-devel
 BuildRequires:	libtool
+BuildRequires:	libltdl-devel
 BuildRequires:	libvorbis-devel
+%if %{with apidocs}
+BuildRequires:	doxygen
+BuildRequires:	graphviz
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -73,10 +79,20 @@ Static libmp3splt library.
 %description static -l pl.UTF-8
 Statyczna biblioteka libmp3splt.
 
+%package apidocs
+Summary:	libmp3splt API documentation
+Summary(pl.UTF-8):	Dokumentacja API biblioteki libmp3splt
+Group:		Documentation
+
+%description apidocs
+API and internal documentation for libmp3splt library.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API biblioteki libmp3splt.
+
 %prep
 %setup -q
-# Avoid standard rpaths on lib64 archs:
-sed -i -e 's|"/lib /usr/lib\b|"/%{_lib} %{_libdir}|' configure
+%patch0 -p1
 
 %build
 %{__gettextize}
@@ -86,19 +102,22 @@ sed -i -e 's|"/lib /usr/lib\b|"/%{_lib} %{_libdir}|' configure
 %{__autoheader}
 %{__automake}
 %configure \
-%if %{with ltdl}
 	--with-ltdl-lib=%{_libdir} \
 	--with-ltdl-include=%{_includedir} \
-%endif
 	%{!?with_static_libs:--disable-static}
 
 %{__make}
+%if %{with apidocs}
+%{__make} -C doc doc
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/%{name}/*.{a,la}
 
 %find_lang %{name}
 
@@ -113,19 +132,13 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(755,root,root) %{_libdir}/libmp3splt.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmp3splt.so.0
-%attr(755,root,root) %{_libdir}/%{name}/libsplt_mp3.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/%{name}/libsplt_mp3.so.0
-%attr(755,root,root) %{_libdir}/%{name}/libsplt_ogg.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/%{name}/libsplt_ogg.so.0
+%attr(755,root,root) %{_libdir}/%{name}/libsplt_mp3.so
+%attr(755,root,root) %{_libdir}/%{name}/libsplt_ogg.so
 
 %files devel
 %defattr(644,root,root,755)
 %{_libdir}/libmp3splt.so
 %{_libdir}/libmp3splt.la
-%{_libdir}/%{name}/libsplt_mp3.so
-%{_libdir}/%{name}/libsplt_mp3.la
-%{_libdir}/%{name}/libsplt_ogg.so
-%{_libdir}/%{name}/libsplt_ogg.la
 %{_includedir}/libmp3splt
 %{_aclocaldir}/mp3splt.m4
 
@@ -133,6 +146,10 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libmp3splt.a
-%{_libdir}/%{name}/libsplt_mp3.a
-%{_libdir}/%{name}/libsplt_ogg.a
+%endif
+
+%if %{with apidocs}
+%files apidocs
+%defattr(644,root,root,755)
+%doc doc/html/*
 %endif
