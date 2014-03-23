@@ -3,20 +3,20 @@
 @@ -103,8 +103,8 @@ static int splt_p_filter_plugin_files(co
  
  #ifndef __WIN32__
-         //gnu/linux .so.0
--        p_end = strstr(file, ".so.0");
--        if (p_end != NULL && (p_start == p_end) && (*(p_end+5) == '\0'))
-+        p_end = strstr(file, ".so");
-+        if (p_end != NULL && (p_start == p_end) && (*(p_end+3) == '\0'))
-         {
-           return 1;
-         }
+   //gnu/linux .so.0
+-  p_end = strstr(file, ".so.0");
+-  if (p_end != NULL && (p_start == p_end) && (*(p_end+5) == '\0'))
++  p_end = strstr(file, ".so");
++  if (p_end != NULL && (p_start == p_end) && (*(p_end+3) == '\0'))
+   {
+     return 1;
+   }
 --- libmp3splt-0.6.1a/plugins/Makefile.am.wiget	2011-03-15 11:34:11.244527716 +0100
 +++ libmp3splt-0.6.1a/plugins/Makefile.am	2011-03-15 11:34:41.346369612 +0100
 @@ -5,7 +5,7 @@ plugin_LTLIBRARIES =
  #ccommon_LDFLAGS = -module -export-dynamic -avoid-version
  common_CPPFLAGS = -I$(top_srcdir)/include/libmp3splt -I$(top_srcdir)/src
- common_LDFLAGS = -L$(top_builddir)/src -L$(top_builddir)/src/.libs -L/lib \
+ common_LDFLAGS = -L$(top_builddir)/src -L$(top_builddir)/src/.libs \
 -   -no-undefined -lm -lmp3splt @LIBINTL@
 +   -no-undefined -avoid-version -lm -lmp3splt @LIBINTL@
  
