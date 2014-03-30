@@ -2,12 +2,12 @@
 # Conditional build:
 %bcond_without	apidocs		# do not build and package API docs
 %bcond_without	static_libs	# don't build static libraries
-#
+
 Summary:	Libraries for the mp3splt project
 Summary(pl.UTF-8):	Biblioteki do projektu mp3splt
 Name:		libmp3splt
 Version:	0.9.0
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/mp3splt/%{name}-%{version}.tar.gz
@@ -87,6 +87,9 @@ Statyczna biblioteka libmp3splt.
 Summary:	libmp3splt API documentation
 Summary(pl.UTF-8):	Dokumentacja API biblioteki libmp3splt
 Group:		Documentation
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description apidocs
 API and internal documentation for libmp3splt library.
