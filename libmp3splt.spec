@@ -6,14 +6,13 @@
 Summary:	Libraries for the mp3splt project
 Summary(pl.UTF-8):	Biblioteki do projektu mp3splt
 Name:		libmp3splt
-Version:	0.9.0
-Release:	2
+Version:	0.9.1
+Release:	1
 License:	GPL v2
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/mp3splt/%{name}-%{version}.tar.gz
-# Source0-md5:	b9b9677ababf823e0739e5caff68aa86
+# Source0-md5:	742f9fb4806df909c0ba25919bf9bb4f
 Patch0:		ltdl.patch
-Patch1:		%{name}-format_security.patch
 URL:		http://mp3splt.sourceforge.net/
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake
@@ -100,7 +99,6 @@ Dokumentacja API biblioteki libmp3splt.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 sed -i -e 's/fr_FR/fr/;s/de_DE/de/;' po/LINGUAS
 mv po/de_DE.po po/de.po
 mv po/fr_FR.po po/fr.po
