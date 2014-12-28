@@ -17,7 +17,7 @@ URL:		http://mp3splt.sourceforge.net/
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake
 BuildRequires:	flac-devel >= 1.2.1
-BuildRequires:	gettext-devel >= 0.18.3
+BuildRequires:	gettext-tools >= 0.18.3
 BuildRequires:	libid3tag-devel
 BuildRequires:	libltdl-devel
 BuildRequires:	libmad-devel
