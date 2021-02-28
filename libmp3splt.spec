@@ -86,9 +86,7 @@ Statyczna biblioteka libmp3splt.
 Summary:	libmp3splt API documentation
 Summary(pl.UTF-8):	Dokumentacja API biblioteki libmp3splt
 Group:		Documentation
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description apidocs
 API and internal documentation for libmp3splt library.
