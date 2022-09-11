@@ -7,7 +7,7 @@ Summary:	Libraries for the mp3splt project
 Summary(pl.UTF-8):	Biblioteki do projektu mp3splt
 Name:		libmp3splt
 Version:	0.9.1
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/mp3splt/%{name}-%{version}.tar.gz
