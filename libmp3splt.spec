@@ -96,7 +96,7 @@ Dokumentacja API biblioteki libmp3splt.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -P0 -p1
 sed -i -e 's/fr_FR/fr/;s/de_DE/de/;' po/LINGUAS
 mv po/de_DE.po po/de.po
 mv po/fr_FR.po po/fr.po
